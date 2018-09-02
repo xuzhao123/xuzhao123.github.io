@@ -33,18 +33,18 @@
 <link rel="canonical" href="/2018/09/02/Tasks, microtasks, queues and schedules/"/>
 
 
-<meta name="description" content="Tasks, microtasks, queues and schedules本文翻译自：原文地址  开始看下列一段JavaScript代码： 12345678910111213console.log(&apos;script start&apos;);setTimeout(function() &amp;#123;  console.log(&apos;setTimeout&apos;);&amp;#125;, 0);Promise.resolve(">
+<meta name="description" content="本文翻译自：原文地址">
 <meta name="keywords" content="前端,Node,Angular,架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tasks, microtasks, queues and schedules">
 <meta property="og:url" content="/2018/09/02/Tasks, microtasks, queues and schedules/index.html">
 <meta property="og:site_name" content="sunny">
-<meta property="og:description" content="Tasks, microtasks, queues and schedules本文翻译自：原文地址  开始看下列一段JavaScript代码： 12345678910111213console.log(&apos;script start&apos;);setTimeout(function() &amp;#123;  console.log(&apos;setTimeout&apos;);&amp;#125;, 0);Promise.resolve(">
+<meta property="og:description" content="本文翻译自：原文地址">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-02T13:53:36.082Z">
+<meta property="og:updated_time" content="2018-09-02T14:48:18.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tasks, microtasks, queues and schedules">
-<meta name="twitter:description" content="Tasks, microtasks, queues and schedules本文翻译自：原文地址  开始看下列一段JavaScript代码： 12345678910111213console.log(&apos;script start&apos;);setTimeout(function() &amp;#123;  console.log(&apos;setTimeout&apos;);&amp;#125;, 0);Promise.resolve(">
+<meta name="twitter:description" content="本文翻译自：原文地址">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -137,8 +137,8 @@
 
     
             <div class="post-content">
-            <h1 id="Tasks-microtasks-queues-and-schedules"><a href="#Tasks-microtasks-queues-and-schedules" class="headerlink" title="Tasks, microtasks, queues and schedules"></a>Tasks, microtasks, queues and schedules</h1><p>本文翻译自：<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="noopener">原文地址</a></p>
-<hr>
+            <p>本文翻译自：<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="noopener">原文地址</a></p>
+<a id="more"></a>
 <h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>看下列一段JavaScript代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise1'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
 <p>上述代码会打印什么呢？</p>
@@ -251,19 +251,57 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:left">chrome</th>
-<th style="text-align:left">Firefox</th>
-<th style="text-align:left">safari</th>
-<th style="text-align:left">IE Edge</th>
+<th>chrome</th>
+<th>Firefox</th>
+<th>safari</th>
+<th>IE Edge</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"></td>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+</tr>
+<tr>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+</tr>
+<tr>
+<td>promise</td>
+<td>mutate</td>
+<td>mutate</td>
+<td>mutate</td>
+</tr>
+<tr>
+<td>mutate</td>
+<td>timeout</td>
+<td>promise</td>
+<td>timeout</td>
+</tr>
+<tr>
+<td>promise</td>
+<td>promise</td>
+<td>pormise</td>
+<td>promise</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>promise</td>
+<td>timeout</td>
+<td>timeout</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>promise</td>
+<td>promise</td>
+<td>promise</td>
 </tr>
 </tbody>
 </table>
-<p>click|click|click|click<br>click|click|click|click<br>promise|mutate|mutate|mutate<br>mutate|timeout|promise|timeout<br>promise|promise|pormise|promise<br>timeout|promise|timeout|timeout<br>timeout|promise|promise|promise</p>
 <h2 id="这又是发生了什么？"><a href="#这又是发生了什么？" class="headerlink" title="这又是发生了什么？"></a>这又是发生了什么？</h2><p>那么它应该发生什么：</p>
 <ol>
 <li>click事件得到执行</li>
@@ -283,11 +321,11 @@
 <li>执行setTimeout</li>
 </ol>
 <p>所以chrome再次正确，这里和上面的区别好像是用户手动点击会因为冒泡而将两个事件分为两个task，而代码执行时是一个task所以中间不会执行微任务。</p>
-<p>之前，这意味着微任务在侦听器回调之间执行，但是<code>.click()</code>会使事件的分发变成同步的，所以脚本在执行<code>.click()</code>后在两个回调间仍然在调用堆栈内。上述规则确保了微任务不会打断JavaScrit的执行。这就意味着微任务会在所有的listeners执行后再执行。</p>
+<p>之前，这意味着微任务在侦听器回调之间执行，但是<code>.click()</code>会使事件的分发变成同步的，所以脚本在执行<code>.click()</code>后在两个回调间仍然在调用堆栈内。上述规则确保了微任务不会打断JavaScrit的执行。这就意味着微任务会在所有的listeners执行后再执行。</p>
 <h2 id="这会造成什么影响吗？"><a href="#这会造成什么影响吗？" class="headerlink" title="这会造成什么影响吗？"></a>这会造成什么影响吗？</h2><p>译者认为，则不会造成什么影响，只要你理解其中的原理，并正确的使用。。。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>任务会有序的执行，并且浏览器可以在期间执行渲染等任务</li>
-<li>微任务也是有序的执行，并且执行在：<br>只要没有其他脚本执行的每一个回调后<br>在每一个task的结尾</li>
+<li>任务会有序的执行，并且浏览器可以在期间执行渲染等任务</li>
+<li>微任务也是有序的执行，并且执行在：<br>只要没有其他脚本执行的每一个回调后<br>在每一个task的结尾</li>
 <li>自行执行click会将冒泡的过程变成同步的  </li>
 </ol>
 
