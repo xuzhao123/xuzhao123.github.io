@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="ubuntu操作"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="sunny">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="/2018/09/25/ubuntu操作/"/>
+
+
+<meta name="description" content="记录在日常遇见过的服务器操作 ssh远程登录服务区1ssh user@ip 终端ssh断开方法123ctrl + D// orlogout 查看端口占用1lsof -i:端口号 杀进程1kill -9 PID 安装node12345apt-get remove nodejs   //删除nodejs  curl -sL https://deb.nodesource.com/setup_8.x |">
+<meta name="keywords" content="前端,Node,Angular,架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu操作">
+<meta property="og:url" content="/2018/09/25/ubuntu操作/index.html">
+<meta property="og:site_name" content="sunny">
+<meta property="og:description" content="记录在日常遇见过的服务器操作 ssh远程登录服务区1ssh user@ip 终端ssh断开方法123ctrl + D// orlogout 查看端口占用1lsof -i:端口号 杀进程1kill -9 PID 安装node12345apt-get remove nodejs   //删除nodejs  curl -sL https://deb.nodesource.com/setup_8.x |">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-25T05:24:53.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu操作">
+<meta name="twitter:description" content="记录在日常遇见过的服务器操作 ssh远程登录服务区1ssh user@ip 终端ssh断开方法123ctrl + D// orlogout 查看端口占用1lsof -i:端口号 杀进程1kill -9 PID 安装node12345apt-get remove nodejs   //删除nodejs  curl -sL https://deb.nodesource.com/setup_8.x |">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> ubuntu操作 - sunny </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">sunny</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/">
+                            
+                            
+                                首页
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ubuntu操作
+        
+      </h1>
+
+      <time class="post-time">
+          Sep 25 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>记录在日常遇见过的服务器操作</p>
+<h2 id="ssh远程登录服务区"><a href="#ssh远程登录服务区" class="headerlink" title="ssh远程登录服务区"></a>ssh远程登录服务区</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@ip</span><br></pre></td></tr></table></figure>
+<h2 id="终端ssh断开方法"><a href="#终端ssh断开方法" class="headerlink" title="终端ssh断开方法"></a>终端ssh断开方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctrl + D</span><br><span class="line">// or</span><br><span class="line"><span class="built_in">logout</span></span><br></pre></td></tr></table></figure>
+<h2 id="查看端口占用"><a href="#查看端口占用" class="headerlink" title="查看端口占用"></a>查看端口占用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:端口号</span><br></pre></td></tr></table></figure>
+<h2 id="杀进程"><a href="#杀进程" class="headerlink" title="杀进程"></a>杀进程</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 PID</span><br></pre></td></tr></table></figure>
+<h2 id="安装node"><a href="#安装node" class="headerlink" title="安装node"></a>安装node</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">apt-get remove nodejs   //删除nodejs  </span><br><span class="line">curl -sL https://deb.nodesource.com/setup_8.x | sudo bash - //nodejs源  </span><br><span class="line">apt-get update //更新包  </span><br><span class="line">apt-get install nodejs //安装nodejs  </span><br><span class="line">npm install npm -g //更新npm</span><br></pre></td></tr></table></figure>
+<h2 id="查看文件及文件夹大小"><a href="#查看文件及文件夹大小" class="headerlink" title="查看文件及文件夹大小"></a>查看文件及文件夹大小</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -hs *</span><br></pre></td></tr></table></figure>
+<h2 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/mongodb/bin</span><br><span class="line">./mongod --dbpath=/data/db --fork -f /etc/mongod.conf --logpath=/data/logs</span><br></pre></td></tr></table></figure>
+<h2 id="修复MongoDB"><a href="#修复MongoDB" class="headerlink" title="修复MongoDB"></a>修复MongoDB</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/mongodb/bin</span><br><span class="line">./mongod --repair --dbpath=/data/db</span><br></pre></td></tr></table></figure>
+<h2 id="停止MongoDB"><a href="#停止MongoDB" class="headerlink" title="停止MongoDB"></a>停止MongoDB</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/mongodb/bin</span><br><span class="line">./mongod --dbpath=/data/db --shutdown</span><br></pre></td></tr></table></figure>
+<h2 id="修改readOnly文件"><a href="#修改readOnly文件" class="headerlink" title="修改readOnly文件"></a>修改readOnly文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:w !sudo tee %</span><br><span class="line">l</span><br><span class="line">:q</span><br></pre></td></tr></table></figure>
+<h2 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef|grep nginx</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/09/25/ssh免密登录/">
+        <span class="next-text nav-default">ssh免密登录</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">sunny.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
