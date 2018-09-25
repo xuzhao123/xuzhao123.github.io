@@ -35,18 +35,18 @@
 <link rel="canonical" href="/2018/09/25/使用travis的心路历程/"/>
 
 
-<meta name="description" content="使用travis的心路历程111travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.trav">
+<meta name="description" content="travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.travis-ci.org/ 用gith">
 <meta name="keywords" content="travis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用travis的心路历程">
 <meta property="og:url" content="/2018/09/25/使用travis的心路历程/index.html">
 <meta property="og:site_name" content="sunny">
-<meta property="og:description" content="使用travis的心路历程111travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.trav">
+<meta property="og:description" content="travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.travis-ci.org/ 用gith">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-25T05:01:07.257Z">
+<meta property="og:updated_time" content="2018-09-25T05:13:36.328Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用travis的心路历程">
-<meta name="twitter:description" content="使用travis的心路历程111travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.trav">
+<meta name="twitter:description" content="travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.travis-ci.org/ 用gith">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -139,7 +139,7 @@
 
     
             <div class="post-content">
-            <h1 id="使用travis的心路历程111"><a href="#使用travis的心路历程111" class="headerlink" title="使用travis的心路历程111"></a>使用travis的心路历程111</h1><p>travis是一个持续集成的服务(Continuous Integration，简称 CI）<br>作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。</p>
+            <p>travis是一个持续集成的服务(Continuous Integration，简称 CI）<br>作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。</p>
 <p>下文中以一个自动构建node任务为例，从零开始完成构建任务。<br>本机环境：Mac，服务器Ubuntu。</p>
 <h2 id="建立账号"><a href="#建立账号" class="headerlink" title="建立账号"></a>建立账号</h2><p>登录网站<a href="https://www.travis-ci.org/" target="_blank" rel="noopener">https://www.travis-ci.org/</a> 用github账号登录，开启你想要持续集成的仓库。开启后则会自动监听github的事件，根据配置文件完成构建任务。</p>
 <h2 id="新建-travis-yml"><a href="#新建-travis-yml" class="headerlink" title="新建 .travis.yml"></a>新建 .travis.yml</h2><p>.travis.yml是针对于仓库的构建任务配置，放在仓库的根目录下，必要文件。</p>
