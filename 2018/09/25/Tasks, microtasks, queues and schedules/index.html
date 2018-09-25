@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="Tasks, microtasks, queues and schedules"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="sunny">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="/2018/09/25/Tasks, microtasks, queues and schedules/"/>
+
+
+<meta name="description" content="Tasks, microtasks, queues and schedules本文翻译自：原文地址">
+<meta name="keywords" content="前端,Node,Angular,架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tasks, microtasks, queues and schedules">
+<meta property="og:url" content="/2018/09/25/Tasks, microtasks, queues and schedules/index.html">
+<meta property="og:site_name" content="sunny">
+<meta property="og:description" content="Tasks, microtasks, queues and schedules本文翻译自：原文地址">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-25T05:28:16.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tasks, microtasks, queues and schedules">
+<meta name="twitter:description" content="Tasks, microtasks, queues and schedules本文翻译自：原文地址">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Tasks, microtasks, queues and schedules - sunny </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">sunny</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/">
+                            
+                            
+                                首页
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Tasks, microtasks, queues and schedules
+        
+      </h1>
+
+      <time class="post-time">
+          Sep 25 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="Tasks-microtasks-queues-and-schedules"><a href="#Tasks-microtasks-queues-and-schedules" class="headerlink" title="Tasks, microtasks, queues and schedules"></a>Tasks, microtasks, queues and schedules</h1><p>本文翻译自：<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="noopener">原文地址</a></p>
+<a id="more"></a>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>看下列一段JavaScript代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise1'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
+<p>上述代码会打印什么呢？</p>
+<p>正确答案是: <code>script start</code> , <code>promise1</code> , <code>script end</code> , <code>promise2</code> , <code>setTimeout</code> ,但是对于浏览器的支持度而言缺非常混乱。</p>
+<p>Microsoft Edge, Firefox 40, iOS Safari和桌面版Safari 8.0.8会有时把<code>setTimeout</code>先于<code>promise1</code>和<code>promise2</code>打印,这看起来像是在竞赛一样，另外,Firefox 39 和 Safari 8.0.7则表现正常.</p>
+<p>为什么会出现这种现象呢？</p>
+<p>为了理解为什么会发生这种现象则必须理解任务和宏任务，在你第一次遇见它时，k额能会让你大吃一惊，深呼吸。。。</p>
+<p>每个线程都有自己的时间循环，所以每个web worker都能独立运行，而同一来源的所有窗口共享一个事件循环，因此它们可以进行同步的通信。事件循环不断的运行，运行队列中的任务任务。事件循环有多个任务源，可以保证源中的执行顺序。但是浏览器会在循环的每个回合中选择从哪个源获取任务。这允许浏览器优先选择性能敏感的任务比如说用户输入。</p>
+<p>任务是有顺序的以便浏览器可以从内部进入JavaScript/DOM域并且确保这些行为有序执行（这有什么因果关系呢。。。）。在任务之间，浏览器可以渲染更新。从鼠标点击到事件回调需要调度任务，解析HTML也是如此，在上面的实例中也是一样，<code>setTimeout</code>。</p>
+<p>setTimeout等待给定的延迟事件后为回调函数调度一个新的任务，这就是为什么<code>setTimeout</code>在<code>script end</code>之后打印出来。打印<code>script end</code>是第一个任务的一部分，<code>script</code>在一个单独的任务中打印。了解这些是不够的，接下来。。。</p>
+<p>微任务（Microtasks）通常发生在当前正在执行的脚本之后执行,例如对一批动作做出反应，或者使某些异步执行而不需要承担整个新任务的代价（emmmm…）。只要没有其他的js代码在执行中，在每个任务的末尾，微任务在回调之后被处理。在微任务期间，任何新加的微任务都会添加到队列的默认并执行,微任务包括<code>mutation observer</code>回调，在上述例子中即是<code>Promise</code>回调。</p>
+<p>一旦一个promsie被解决了，或者已经被解决了，它就为回调（reactionary callbacks）排队一个微任务。这保证了promise的回调是异步的即使promise已经得到解决。因此对已确定的promise调用then会立即使微任务排队。这是为什么<code>promsie1</code>和<code>promise2</code>在<code>script end</code>之后打印，而当前正在运行的脚本必须在微任务处理后才完成。<code>promise1</code>和<code>promise2</code>在<code>setTimeout</code>之前打印，因为微任务通常发生在下一个任务之前。</p>
+<p>一步一步来：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'script start'</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise1'</span>);</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise2'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'script end'</span>);</span><br></pre></td></tr></table></figure>
+<p>执行步骤：</p>
+<ol>
+<li>打印<code>script start</code></li>
+<li>setTimeout的回调作为任务排队</li>
+<li>promise回调作为微任务排队</li>
+<li>打印<code>script end</code></li>
+<li>在任务的末尾，开始执行微任务</li>
+<li>打印<code>promise1</code></li>
+<li>第一个then执行完毕返回undefined，将第二个then的回调作为微任务排队</li>
+<li>第一个微任务完成，执行队列中下一个微任务</li>
+<li>打印<code>promise2</code></li>
+<li>任务执行完毕，浏览器能更新渲染啦</li>
+<li>打印<code>setTimeout</code></li>
+<li>完毕</li>
+</ol>
+<h2 id="为什么浏览器的表现会不一致？"><a href="#为什么浏览器的表现会不一致？" class="headerlink" title="为什么浏览器的表现会不一致？"></a>为什么浏览器的表现会不一致？</h2><p>一些浏览器打印<code>script start</code>, <code>script end</code>, <code>setTimeout</code>, <code>promise1</code>, <code>promise2</code>，它们在<code>setTimeout</code>之后执行promise回调，就好像它们把promise回调当做一个新的任务而不是微任务。</p>
+<p>这是可以被原谅的，因为promise来自ECMAScript而不是HTML，ECMAScript有类似于微任务的概念‘jobs’，但是除了模糊的邮件列表讨论，它们的关系并不明确。然而普遍的共识是promise是微任务队列的一部分，并且有很好的理由。</p>
+<p>将promise视为任务会导致性能问题，因为回调会因为一些任务相关的事情比如说渲染造成不必要的延迟。它还会由于和其他的任务源的交互导致不确定性，并且可能终端和其他API的交互，稍后再做介绍。</p>
+<p>WebKit一直是正确的，所以我任务Safari最终会修复这个问题，似乎在Firefox 43中修复的。</p>
+<h2 id="如何判断是任务还是微任务"><a href="#如何判断是任务还是微任务" class="headerlink" title="如何判断是任务还是微任务"></a>如何判断是任务还是微任务</h2><p>测试时一种方法，看他和promise和setTimeout之间是如何打印的，尽管这依赖于浏览器的实现。</p>
+<p>另外一种方法就是查看说明书，例如，setTimeout队列(setTimeout queues)是一个任务，而setTimeout队列(setTimeout queues)是一个微任务(microtask)。</p>
+<p>正如之前提到的，在ECMAScript领域中，它们称微任务为‘jobs’，在 <code>PerforemPromiseThen</code>中，<code>EnqueueJob</code>被调用来排队一个微任务。</p>
+<p>接下来，让我们看更多复杂的例子。</p>
+<h2 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"outer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"inner"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我点击<code>div.inner</code>时会打印什么？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Let's get hold of those elements</span></span><br><span class="line"><span class="keyword">var</span> outer = <span class="built_in">document</span>.querySelector(<span class="string">'.outer'</span>);</span><br><span class="line"><span class="keyword">var</span> inner = <span class="built_in">document</span>.querySelector(<span class="string">'.inner'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Let's listen for attribute changes on the</span></span><br><span class="line"><span class="comment">// outer element</span></span><br><span class="line"><span class="keyword">new</span> MutationObserver(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'mutate'</span>);</span><br><span class="line">&#125;).observe(outer, &#123;</span><br><span class="line">  attributes: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Here's a click listener…</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onClick</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'click'</span>);</span><br><span class="line"></span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'timeout'</span>);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'promise'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  outer.setAttribute(<span class="string">'data-random'</span>, <span class="built_in">Math</span>.random());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// …which we'll attach to both elements</span></span><br><span class="line">inner.addEventListener(<span class="string">'click'</span>, onClick);</span><br><span class="line">outer.addEventListener(<span class="string">'click'</span>, onClick);</span><br></pre></td></tr></table></figure>
+<p>在各浏览器中执行的顺序如下：</p>
+<p>chrome：</p>
+<ol>
+<li>click</li>
+<li>promise</li>
+<li>mutate</li>
+<li>click</li>
+<li>promise</li>
+<li>mutate</li>
+<li>timeout</li>
+<li>timeout</li>
+</ol>
+<p>FireFox</p>
+<ol>
+<li>click</li>
+<li>mutate</li>
+<li>click</li>
+<li>mutate</li>
+<li>timeout</li>
+<li>promise</li>
+<li>promise</li>
+<li>timeout</li>
+</ol>
+<p>safari</p>
+<ol>
+<li>click</li>
+<li>mutate</li>
+<li>click</li>
+<li>mutate</li>
+<li>promise</li>
+<li>promise</li>
+<li>timeout</li>
+<li>timeout</li>
+</ol>
+<p>IE</p>
+<ol>
+<li>click</li>
+<li>click</li>
+<li>mutate</li>
+<li>timeout</li>
+<li>promise</li>
+<li>timeout</li>
+<li>promise</li>
+</ol>
+<p>谁是正确的呢？</p>
+<p>调度单单击事件是一个任务，Mutatation Observer和promise回调作为微任务排队。setTimeout回调作为任务排队，所以正确的应该是这样：</p>
+<ol>
+<li>click事件得到执行</li>
+<li>打印<code>click</code></li>
+<li>setTimeout回调添加至任务队列</li>
+<li>promise回调添加至微任务队列</li>
+<li>mutation添加至微任务队列</li>
+<li>click执行完毕</li>
+<li>虽然现在处在任务中间，但如果堆栈为空，则在回调后处理微任务</li>
+<li>打印<code>promise</code></li>
+<li>打印<code>mutate</code>(这里执行顺序应该是添加至微任务里时的顺序)</li>
+<li>事件冒泡，所以回调再次执行</li>
+<li>执行顺序2-9</li>
+<li>打印<code>timeout</code></li>
+<li>打印<code>timeout</code></li>
+<li>完毕</li>
+</ol>
+<p>但是这里我有个以为，既然两个click属于两个task，那么setTimeout会在最后执行，难道是setTimeout的最小时间间隔为4ms的缘故？</p>
+<p>所以chrome有时正确的，微任务会在回调之后执行（只要没有其他的js在执行），我认为它限制在任务的结束（意思应该是在任务的结束执行），</p>
+<h2 id="浏览器出了什么问题？"><a href="#浏览器出了什么问题？" class="headerlink" title="浏览器出了什么问题？"></a>浏览器出了什么问题？</h2><p>Firefox和Safari在两个click事件间正确的执行了所有的微任务，正如展示的mutation回调，但是promsie看起来执行的不太一样，考虑到jobs和微任务的模糊关系，这是可以被原谅的，但是仍然希望他们执行在两个click事件中间。</p>
+<p>对于Edge来讲，我们早已发现他的promsie队列的不正确，但是他也没有在两个click事件之间执行微任务，而是在所有的listeners执行完毕，这是为什么mutate的打印在click打印之后的缘故。</p>
+<h2 id="接下来的测试"><a href="#接下来的测试" class="headerlink" title="接下来的测试"></a>接下来的测试</h2><p>用上面的实例，执行下列代码，将会发生什么</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inner.click();</span><br></pre></td></tr></table></figure>
+<p>结构又不一样了：</p>
+<table>
+<thead>
+<tr>
+<th>chrome</th>
+<th>Firefox</th>
+<th>safari</th>
+<th>IE Edge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+</tr>
+<tr>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+<td>click</td>
+</tr>
+<tr>
+<td>promise</td>
+<td>mutate</td>
+<td>mutate</td>
+<td>mutate</td>
+</tr>
+<tr>
+<td>mutate</td>
+<td>timeout</td>
+<td>promise</td>
+<td>timeout</td>
+</tr>
+<tr>
+<td>promise</td>
+<td>promise</td>
+<td>pormise</td>
+<td>promise</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>promise</td>
+<td>timeout</td>
+<td>timeout</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>promise</td>
+<td>promise</td>
+<td>promise</td>
+</tr>
+</tbody>
+</table>
+<h2 id="这又是发生了什么？"><a href="#这又是发生了什么？" class="headerlink" title="这又是发生了什么？"></a>这又是发生了什么？</h2><p>那么它应该发生什么：</p>
+<ol>
+<li>click事件得到执行</li>
+<li>打印<code>click</code></li>
+<li>setTimeout添加至任务队列</li>
+<li>promise添加至微任务队列</li>
+<li>mutation添加至微任务队列</li>
+<li>（注意）这里不能执行微任务，因为调用堆栈不是空的</li>
+<li>下一个click事件得到执行</li>
+<li>执行2-4</li>
+<li>这里不会再次添加mutation到微任务队列，因为已经有一个pending状态的mutation</li>
+<li>执行微任务</li>
+<li>打印<code>promise</code></li>
+<li>打印<code>mutate</code></li>
+<li>打印<code>promise</code>（再次证明回调是按添加的顺序执行的）</li>
+<li>执行setTimeout</li>
+<li>执行setTimeout</li>
+</ol>
+<p>所以chrome再次正确，这里和上面的区别好像是用户手动点击会因为冒泡而将两个事件分为两个task，而代码执行时是一个task所以中间不会执行微任务。</p>
+<p>之前，这意味着微任务在侦听器回调之间执行，但是<code>.click()</code>会使事件的分发变成同步的，所以脚本在执行<code>.click()</code>后在两个回调间仍然在调用堆栈内。上述规则确保了微任务不会打断JavaScrit的执行。这就意味着微任务会在所有的listeners执行后再执行。</p>
+<h2 id="这会造成什么影响吗？"><a href="#这会造成什么影响吗？" class="headerlink" title="这会造成什么影响吗？"></a>这会造成什么影响吗？</h2><p>译者认为，则不会造成什么影响，只要你理解其中的原理，并正确的使用。。。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>任务会有序的执行，并且浏览器可以在期间执行渲染等任务</li>
+<li>微任务也是有序的执行，并且执行在：<br>只要没有其他脚本执行的每一个回调后<br>在每一个task的结尾</li>
+<li>自行执行click会将冒泡的过程变成同步的  </li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/09/25/Browser VS Node之Event Loop/">
+        <span class="next-text nav-default">Browser VS Node之Event Loop</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">sunny.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
