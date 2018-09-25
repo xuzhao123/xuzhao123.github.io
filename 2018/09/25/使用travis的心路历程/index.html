@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="使用travis的心路历程"/>
+
+
+
+
+  <meta name="keywords" content="travis," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="sunny">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="/2018/09/25/使用travis的心路历程/"/>
+
+
+<meta name="description" content="使用travis的心路历程111travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.trav">
+<meta name="keywords" content="travis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用travis的心路历程">
+<meta property="og:url" content="/2018/09/25/使用travis的心路历程/index.html">
+<meta property="og:site_name" content="sunny">
+<meta property="og:description" content="使用travis的心路历程111travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.trav">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-25T05:01:07.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用travis的心路历程">
+<meta name="twitter:description" content="使用travis的心路历程111travis是一个持续集成的服务(Continuous Integration，简称 CI）作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。 下文中以一个自动构建node任务为例，从零开始完成构建任务。本机环境：Mac，服务器Ubuntu。 建立账号登录网站https://www.trav">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> 使用travis的心路历程 - sunny </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">sunny</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/">
+                            
+                            
+                                首页
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          使用travis的心路历程
+        
+      </h1>
+
+      <time class="post-time">
+          Sep 25 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="使用travis的心路历程111"><a href="#使用travis的心路历程111" class="headerlink" title="使用travis的心路历程111"></a>使用travis的心路历程111</h1><p>travis是一个持续集成的服务(Continuous Integration，简称 CI）<br>作用：当github有新的提交时，会触发提交的hook，然后开始自动构建，包括拉取代码，自动测试，构建任务，执行脚本等功能。</p>
+<p>下文中以一个自动构建node任务为例，从零开始完成构建任务。<br>本机环境：Mac，服务器Ubuntu。</p>
+<h2 id="建立账号"><a href="#建立账号" class="headerlink" title="建立账号"></a>建立账号</h2><p>登录网站<a href="https://www.travis-ci.org/" target="_blank" rel="noopener">https://www.travis-ci.org/</a> 用github账号登录，开启你想要持续集成的仓库。开启后则会自动监听github的事件，根据配置文件完成构建任务。</p>
+<h2 id="新建-travis-yml"><a href="#新建-travis-yml" class="headerlink" title="新建 .travis.yml"></a>新建 .travis.yml</h2><p>.travis.yml是针对于仓库的构建任务配置，放在仓库的根目录下，必要文件。</p>
+<h2 id="安装travis"><a href="#安装travis" class="headerlink" title="安装travis"></a>安装travis</h2><p>操作如同一个普通的机器免密登录远程服务区，可以用一个已经免密登录过的机器中的密钥去登录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">brew install ruby</span><br><span class="line"></span><br><span class="line">gem update --system</span><br><span class="line"></span><br><span class="line">gem sources --add https://gems.ruby-china.org/</span><br><span class="line"></span><br><span class="line">sudo gem install travis</span><br></pre></td></tr></table></figure>
+<p>旧版本的ruby会导致travis有些问题，故用brew安装一个新版本的ruby，brew安装略。<br>更新gem源，（国外的源太慢），上述操作完成后安装travis。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">travis login</span><br></pre></td></tr></table></figure>
+<p>用github账号登录travis,不用担心会暴露密码，因为走得是github的api。</p>
+<h2 id="使travis环境免密登录travis"><a href="#使travis环境免密登录travis" class="headerlink" title="使travis环境免密登录travis"></a>使travis环境免密登录travis</h2><p>cd到本地代码仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">travis encrypt-file ~/.ssh/id_rsa --add</span><br></pre></td></tr></table></figure>
+<p>若本机已经用id_rsa的密钥免密登录服务器则可重用该密钥，上述命令将密钥进行加密放在id_rsa.enc中 –add命令自动将如下注入到配置文件中</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">before_install:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">openssl</span> <span class="string">aes-256-cbc</span> <span class="bullet">-K</span> <span class="string">$encrypted_1b7beeacf6f9_key</span> <span class="bullet">-iv</span> <span class="string">$encrypted_1b7beeacf6f9_iv</span></span><br><span class="line"><span class="bullet">  -</span><span class="string">in</span> <span class="string">id_rsa.enc</span> <span class="bullet">-out</span> <span class="string">~/.ssh/id_rsa</span> <span class="bullet">-d</span></span><br></pre></td></tr></table></figure>
+<p>在before_install下手动添加一行，处理权限问题</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">chmod</span> <span class="number">600</span> <span class="string">~/.ssh/id_rsa</span></span><br></pre></td></tr></table></figure>
+<p>上述操作的目的是：是的travis的虚拟机拥有你服务器的免密登录权限，要不然会卡在密码登录上二部进行自定义的部署过程。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">after_success:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">ssh</span> <span class="string">user@ip</span> <span class="string">"sh ~/www/deploy.sh"</span></span><br></pre></td></tr></table></figure>
+<p>成功时候，就会在虚拟机中执行上句，免密登录到你的服务器，执行你www文件夹下的deplay.sh,deplay.sh自定义，这样就可以为所欲为了。  </p>
+<p>失败总结：</p>
+<ol>
+<li><p>在虚拟机免密登录服务器失败：  </p>
+<p> 我是因为在虚拟机中密钥默认用的名称必须是id_rsa, -out ~/.ssh/id_rsa下必须为id_rsa.</p>
+</li>
+<li><p>在虚拟机执行脚本中的git操作失败：  </p>
+<p> 因为在服务器中git操作是没问题的，可以用本机测试ssh user@ip “sh ~/www/deploy.sh”，结果也失败，后来在服务器上的.ssh文件夹下添加config文件，填写ssh配置才成功</p>
+</li>
+</ol>
+<h2 id="加密字段"><a href="#加密字段" class="headerlink" title="加密字段"></a>加密字段</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">travis encrypt SOMEVAR=secretvalue --add</span><br></pre></td></tr></table></figure>
+<p>上述–add会自动添加至配置文件中，在配置文件中可用$SOMEVAR表示你的变量。<br>经验：addons:ssh_known_hosts中不能用该配置，因为变量的配置在此之后。。。</p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/travis/">travis</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">sunny.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
