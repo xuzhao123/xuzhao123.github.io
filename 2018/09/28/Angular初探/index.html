@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="Angular初探"/>
+
+
+
+
+  <meta name="keywords" content="angular," />
+
+
+
+
+
+  <link rel="alternate" href="/default" title="sunny">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="/2018/09/28/Angular初探/"/>
+
+
+<meta name="description" content="本文作为自己学习Angular的记录文，意在之后的用途中回顾所学的知识。目标是打造一个通过angular-cli生成的demo应用，汇集Module，Component，Service，模板语法，生命周期，组件间的交互，指令，管道，动画，Rxjs，国际化（i18n）,懒加载，ssr(服务端渲染)等知识点的一个示例应用。 angular-cli 安装angular-cli 1npm install">
+<meta name="keywords" content="angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular初探">
+<meta property="og:url" content="/2018/09/28/Angular初探/index.html">
+<meta property="og:site_name" content="sunny">
+<meta property="og:description" content="本文作为自己学习Angular的记录文，意在之后的用途中回顾所学的知识。目标是打造一个通过angular-cli生成的demo应用，汇集Module，Component，Service，模板语法，生命周期，组件间的交互，指令，管道，动画，Rxjs，国际化（i18n）,懒加载，ssr(服务端渲染)等知识点的一个示例应用。 angular-cli 安装angular-cli 1npm install">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-28T14:41:42.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular初探">
+<meta name="twitter:description" content="本文作为自己学习Angular的记录文，意在之后的用途中回顾所学的知识。目标是打造一个通过angular-cli生成的demo应用，汇集Module，Component，Service，模板语法，生命周期，组件间的交互，指令，管道，动画，Rxjs，国际化（i18n）,懒加载，ssr(服务端渲染)等知识点的一个示例应用。 angular-cli 安装angular-cli 1npm install">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Angular初探 - sunny </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">sunny</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/">
+                            
+                            
+                                首页
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                关于
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Angular初探
+        
+      </h1>
+
+      <time class="post-time">
+          Sep 28 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <p>本文作为自己学习Angular的记录文，意在之后的用途中回顾所学的知识。目标是打造一个通过angular-cli生成的demo应用，汇集Module，Component，Service，模板语法，生命周期，组件间的交互，指令，管道，动画，Rxjs，国际化（i18n）,懒加载，ssr(服务端渲染)等知识点的一个示例应用。</p>
+<h2 id="angular-cli"><a href="#angular-cli" class="headerlink" title="angular-cli"></a>angular-cli</h2><ul>
+<li><p>安装angular-cli</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @angular/cli</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>认识angular-cli<br>安装版本：@6.1.3<br>运行代码下述命令可查看帮助：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng --help</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>常用命令有如下，也可以在每个命令下加上 –help查看帮助</p>
+<ol>
+<li>ng new 新建  </li>
+<li>ng generate 生成文件  </li>
+<li>ng build 构建  </li>
+<li>ng serve 运行服务  </li>
+<li>ng help 帮助</li>
+</ol>
+<ul>
+<li>初始化文件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng new demo --routing --style=sass --skip-tests</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>生成了一个带有路由模块，样式为sass（也可不带或者less），跳过测试文件的demo目录，所有初始安装包均已install。详细配置可查看ng new –help  </p>
+<ul>
+<li>开启服务<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ng serve</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>详细配置可查看ng serve –help 例如–aot 开启aot编译（开发阶段常用jit编译，生产阶段常用aot编译）–host 监听的端口号等。</p>
+<ul>
+<li>生成组件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ng generate component home</span><br><span class="line">ng g c home</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>生成了一个home的组件，generate可简写为g，component可简写为c，这样就生成了</p>
+<ol>
+<li>home.component.html</li>
+<li>home.component.sass</li>
+<li>home.component.ts</li>
+</ol>
+<p>三个文件（如果之前没有通过配置项设置为内联引用的话）。</p>
+<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>在之前生成的app-routing.module.ts路由模块中添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &#123; HomeComponent &#125; from &apos;./home/home.component&apos;;</span><br><span class="line">const routes: Routes = [</span><br><span class="line">  &#123; path: &apos;home&apos;, component: HomeComponent &#125;,</span><br><span class="line">  &#123; path: &apos;&apos;, redirectTo: &apos;/home&apos;, pathMatch: &apos;full&apos; &#125;,</span><br><span class="line">  &#123; path: &apos;**&apos;, component: HomeComponent &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure></p>
+<p>定义了home路由的模块组件已经空路由的重定向以及未匹配到路由的组件。注意：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forRoot(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>自能有一个根路由，其他的子路由用forChild，还需要把RouterModule模块导出，由app.module模块导入才能正常使用路由系统。<br>在app.component.html页面中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;router-outlet&gt;&lt;/router-outlet&gt;</span><br></pre></td></tr></table></figure></p>
+<p>定义路由位置，只后匹配的路由组件会在该定义的下方展示</p>
+<h2 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h2><p>一般为了首屏加载时间缩短会把其他路由定义为懒加载，angular中定义懒加载的方式也非常简单，但是也很强大，不仅能完成懒加载的任务，同时可以通过配置的方式实现守卫（在进入该路由前先检验权限），预加载等等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ng generate module lazy</span><br><span class="line">ng generate component lazy</span><br></pre></td></tr></table></figure></p>
+<p>通过命令生成lazy模块和lazy组件，另外再为lazy模块添加路由组件lazy-routing.module.ts<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import &#123; NgModule &#125; from &apos;@angular/core&apos;;</span><br><span class="line">import &#123; RouterModule, Routes &#125; from &apos;@angular/router&apos;;</span><br><span class="line">import &#123; LazyComponent &#125; from &apos;./lazy.component&apos;;</span><br><span class="line"></span><br><span class="line">const routes: Routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: &apos;&apos;,</span><br><span class="line">    component: LazyComponent,</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [RouterModule.forChild(routes)],</span><br><span class="line">  exports: [RouterModule]</span><br><span class="line">&#125;)</span><br><span class="line">export class LazyRoutingModule &#123; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后在lazy的module中导入该路由模块，这样一个异步加载的模块就完成了。</p>
+<h2 id="服务端渲染"><a href="#服务端渲染" class="headerlink" title="服务端渲染"></a>服务端渲染</h2><p>为什么要服务端渲染在这里就不多说了，这里主要关注的点在怎么实现服务端的渲染以及客户端渲染的切换（TODO 能通过webpack直接配置而不走angular-cli吗？）</p>
+<p>通过下列步骤达到的效果：页面初始化时，走一遍服务器渲染，页面会很快的显示出来，但是一些点击事件是没有办法触发的，然后等待客户端的渲染，重新渲染一次根模块（会重新走根组件的构造函数），然后页面就是一个整正的客户端程序，完成切换。</p>
+<ul>
+<li>安装依赖<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @angular/platform-server @nguniversal/module-map-ngfactory-loader ts-loader @nguniversal/express-engine</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>@angular/platform-server - Universal 的服务端元件。</p>
+</li>
+<li><p>@nguniversal/module-map-ngfactory-loader - 用于处理服务端渲染环境下的惰性加载。</p>
+</li>
+<li><p>@nguniversal/express-engine - Universal 应用的 Express 引擎。</p>
+</li>
+<li><p>ts-loader - 用于对服务端应用进行转译。</p>
+</li>
+</ol>
+<ul>
+<li><p>在app.module.ts中导入BrowserModule模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BrowserModule.withServerTransition(&#123; appId: &apos;tour-of-heroes&apos; &#125;),</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>增加src/app/app.server.module.ts<br>这个模块是服务端渲染的入口模块<a href="//www.baidu.com">代码地址</a></p>
+</li>
+<li><p>增加src/main.server.ts<br>这是应用服务器入口点,需要在稍后的angular.json配置中用到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export &#123; AppServerModule &#125; from &apos;./app/app.server.module&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>server.ts<br>这是express框架的web服务器，理论上可以用任何的框架，只要它能调用 Universal 的 renderModuleFactory （TODO 这个用Koa测试一下）<a href="//www.baidu.com">代码地址</a></p>
+</li>
+<li>配置</li>
+</ul>
+<ol>
+<li>src/tsconfig.server.json</li>
+<li>webpack.server.config.js</li>
+<li>angular.json</li>
+</ol>
+<p>最后在package.json中的scripts增加如下行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;build:ssr&quot;: &quot;npm run build:client-and-server-bundles &amp;&amp; npm run webpack:server&quot;,</span><br><span class="line">&quot;serve:ssr&quot;: &quot;node dist/server&quot;,</span><br><span class="line">&quot;build:client-and-server-bundles&quot;: &quot;ng build --prod &amp;&amp; ng run angular.io-example:server&quot;,</span><br><span class="line">&quot;webpack:server&quot;: &quot;webpack --config webpack.server.config.js --progress --colors&quot;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>运行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm run build:ssr</span><br><span class="line">npm run serve:ssr</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>分别执行构建和启动服务器命令，完成！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>基本案例参考官网的步骤，也算是完成了效果，也由此引发了几点思考，在今后补充答案：</p>
+<ol>
+<li>什么时候由服务端渲染切换成客户端渲染？</li>
+<li>能不能不通过angular-cli的方式加载服务端渲染？</li>
+<li>服务端的渲染能不能选择一些模块进行渲染，比如说只渲染首页的路由？</li>
+<li>怎么用其他web服务器开启服务端渲染？比如说koa。。。</li>
+</ol>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/angular/">angular</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2018/09/25/上海之旅/">
+        <span class="next-text nav-default">上海之旅</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2014 -
+    
+    2018
+    <span class="footer-author">sunny.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
