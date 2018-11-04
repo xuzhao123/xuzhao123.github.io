@@ -35,18 +35,18 @@
 <link rel="canonical" href="/2018/11/04/css揭秘/"/>
 
 
-<meta name="description" content="半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以看起">
+<meta name="description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
 <meta name="keywords" content="css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css揭秘">
 <meta property="og:url" content="/2018/11/04/css揭秘/index.html">
 <meta property="og:site_name" content="sunny">
-<meta property="og:description" content="半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以看起">
+<meta property="og:description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-04T13:37:55.729Z">
+<meta property="og:updated_time" content="2018-11-04T14:14:55.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css揭秘">
-<meta name="twitter:description" content="半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以看起">
+<meta name="twitter:description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
@@ -139,7 +139,7 @@
 
     
             <div class="post-content">
-            <h2 id="半透明边框"><a href="#半透明边框" class="headerlink" title="半透明边框"></a>半透明边框</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">border</span>: 10<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-tag">hsla</span>(0,0%,100%,<span class="selector-class">.5</span>);</span><br><span class="line"><span class="selector-tag">background</span>: <span class="selector-tag">white</span>;</span><br></pre></td></tr></table></figure>
+            <h2 id="1-半透明边框"><a href="#1-半透明边框" class="headerlink" title="1.半透明边框"></a>1.半透明边框</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">border</span>: 10<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-tag">hsla</span>(0,0%,100%,<span class="selector-class">.5</span>);</span><br><span class="line"><span class="selector-tag">background</span>: <span class="selector-tag">white</span>;</span><br></pre></td></tr></table></figure>
 <p>上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。</p>
 <p>因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以看起来当然是没有效果。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">border</span>: 10<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-tag">hsla</span>(0,0%,100%,<span class="selector-class">.5</span>);</span><br><span class="line"><span class="selector-tag">background</span>: <span class="selector-tag">white</span>;</span><br><span class="line"><span class="selector-tag">background-clip</span>: <span class="selector-tag">padding-box</span>;</span><br></pre></td></tr></table></figure>
@@ -167,6 +167,60 @@
 </tbody>
 </table>
 <p>故我们用padding-box实现了一个半透明的边框。</p>
+<h2 id="2-多重边框"><a href="#2-多重边框" class="headerlink" title="2. 多重边框"></a>2. 多重边框</h2><h3 id="box-shadow方案"><a href="#box-shadow方案" class="headerlink" title="box-shadow方案"></a>box-shadow方案</h3><table>
+<thead>
+<tr>
+<th>box-shadow</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>h-shadow</td>
+<td>必须，水平阴影位置，允许负值</td>
+</tr>
+<tr>
+<td>v-shadow</td>
+<td>必须，垂直阴影位置，允许负值</td>
+</tr>
+<tr>
+<td>blur</td>
+<td>可选，模糊距离</td>
+</tr>
+<tr>
+<td>spread</td>
+<td>可选，阴影的尺寸</td>
+</tr>
+<tr>
+<td>color</td>
+<td>可选，阴影的颜色</td>
+</tr>
+<tr>
+<td>inset</td>
+<td>可选，内部阴影</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>注意：<ol>
+<li>box-shdow的部分不在文档流范围内，不影响布局，不会受box-sizing的影响。</li>
+<li>类似点击事件是点不到的，可以用inset把边框放在内层。</li>
+<li>可以设置多层边框，通过逗号分隔。但是注意阴影是层层叠加的，故多考虑一下多层阴影的spread。</li>
+</ol>
+</li>
+</ul>
+<h2 id="outline方案"><a href="#outline方案" class="headerlink" title="outline方案"></a>outline方案</h2><ul>
+<li>优点：  <ol>
+<li>更加灵活，可以设置虚线等正常边框可以设置的内容。</li>
+<li>可以用outline-offset设置间距，甚至可以是负值。</li>
+</ol>
+</li>
+<li>缺点：<ol>
+<li>只能实现一层边框</li>
+<li>暂时不贴合容器设置的圆角。</li>
+</ol>
+</li>
+</ul>
 
             </div>
           
