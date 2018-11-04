@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="css揭秘"/>
+  <meta name="description" content="css揭秘（一：背景与边框）"/>
 
 
 
@@ -32,20 +32,20 @@
 
 
 
-<link rel="canonical" href="/2018/11/04/css揭秘/"/>
+<link rel="canonical" href="/2018/11/04/css揭秘（一：背景与边框）/"/>
 
 
 <meta name="description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
 <meta name="keywords" content="css">
 <meta property="og:type" content="article">
-<meta property="og:title" content="css揭秘">
-<meta property="og:url" content="/2018/11/04/css揭秘/index.html">
+<meta property="og:title" content="css揭秘（一：背景与边框）">
+<meta property="og:url" content="/2018/11/04/css揭秘（一：背景与边框）/index.html">
 <meta property="og:site_name" content="sunny">
 <meta property="og:description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-04T14:14:55.801Z">
+<meta property="og:updated_time" content="2018-11-04T15:33:52.507Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="css揭秘">
+<meta name="twitter:title" content="css揭秘（一：背景与边框）">
 <meta name="twitter:description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
 
 
@@ -71,7 +71,7 @@
 
 
 
-    <title> css揭秘 - sunny </title>
+    <title> css揭秘（一：背景与边框） - sunny </title>
   </head>
 
   <body>
@@ -126,7 +126,7 @@
     <header class="post-header">
       <h1 class="post-title">
         
-          css揭秘
+          css揭秘（一：背景与边框）
         
       </h1>
 
@@ -221,6 +221,36 @@
 </ol>
 </li>
 </ul>
+<h2 id="3-灵活的背景定位"><a href="#3-灵活的背景定位" class="headerlink" title="3. 灵活的背景定位"></a>3. 灵活的背景定位</h2><h3 id="background-position"><a href="#background-position" class="headerlink" title="background-position"></a>background-position</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">background-position</span>: <span class="selector-tag">right</span> 10<span class="selector-tag">px</span> <span class="selector-tag">bottom</span> 10<span class="selector-tag">px</span>;</span><br></pre></td></tr></table></figure>
+<p>上述代码设置了图片靠右10px以及靠下10px；但是该background-position设置3-4个属性的时候有一点兼容性的问题提供一个回退方案。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">background</span><span class="selector-pseudo">:url(code-pirate.svg)</span> <span class="selector-tag">no-repeat</span> <span class="selector-tag">bottom</span> <span class="selector-tag">right</span> <span class="selector-id">#58a</span>;</span><br><span class="line"><span class="selector-tag">background-position</span>: <span class="selector-tag">right</span> 10<span class="selector-tag">px</span> <span class="selector-tag">bottom</span> 10<span class="selector-tag">px</span>;</span><br></pre></td></tr></table></figure>
+<p>background-position其他基本的使用是所有浏览器支持的</p>
+<h3 id="background-origin"><a href="#background-origin" class="headerlink" title="background-origin"></a>background-origin</h3><p>每个元素都有三个矩形框，border box，padding box，content box，用background-position中left或者right相对于谁定位呢？默认就是padding box。  </p>
+<p>但是在css3中通过backgorund-origin可以改变该行为.</p>
+<table>
+<thead>
+<tr>
+<th>background-orign</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>border-box</td>
+<td>背景图像相对于边框盒来定位。</td>
+</tr>
+<tr>
+<td>padding-box</td>
+<td>背景图像相对于内边距框来定位。</td>
+</tr>
+<tr>
+<td>content-box</td>
+<td>背景图像相对于内容框来定位。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="calc-方案"><a href="#calc-方案" class="headerlink" title="calc()方案"></a>calc()方案</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">background-position</span>: <span class="selector-tag">calc</span>(100% <span class="selector-tag">-</span> 10<span class="selector-tag">px</span>) <span class="selector-tag">calc</span>(100% <span class="selector-tag">-</span> 10<span class="selector-tag">px</span>);</span><br></pre></td></tr></table></figure>
+<p>上述方案注意calc的使用格式以及兼容性问题。</p>
 
             </div>
           
