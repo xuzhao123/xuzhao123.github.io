@@ -43,7 +43,7 @@
 <meta property="og:site_name" content="sunny">
 <meta property="og:description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-04T15:33:52.507Z">
+<meta property="og:updated_time" content="2018-11-05T15:32:01.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css揭秘（一：背景与边框）">
 <meta name="twitter:description" content="1.半透明边框12border: 10px solid hsla(0,0%,100%,.5);background: white; 上面的代码看似目的是给容器添加一层白色背景和一道半透明白色边框。但是实际上没有达到预想的结果，而是容器全是白色的背景。 因为背景的工作原理就是背景会延伸到边框所在的区域下层，意思就是背景的设置在下层，边框在上层，我们设置的边框透过去看见的还是我们给容器设置的白色，所以">
@@ -251,6 +251,11 @@
 </table>
 <h3 id="calc-方案"><a href="#calc-方案" class="headerlink" title="calc()方案"></a>calc()方案</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">background-position</span>: <span class="selector-tag">calc</span>(100% <span class="selector-tag">-</span> 10<span class="selector-tag">px</span>) <span class="selector-tag">calc</span>(100% <span class="selector-tag">-</span> 10<span class="selector-tag">px</span>);</span><br></pre></td></tr></table></figure>
 <p>上述方案注意calc的使用格式以及兼容性问题。</p>
+<h2 id="边框内圆角"><a href="#边框内圆角" class="headerlink" title="边框内圆角"></a>边框内圆角</h2><p>实现这种情景，外层边框未直角，但是内部边框为圆角</p>
+<h3 id="两个div嵌套"><a href="#两个div嵌套" class="headerlink" title="两个div嵌套"></a>两个div嵌套</h3><p>外层div不设圆角，内部div设置圆角，轻易实现。</p>
+<h3 id="用outline和box-shadow"><a href="#用outline和box-shadow" class="headerlink" title="用outline和box-shadow"></a>用outline和box-shadow</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">border-radius</span>: <span class="selector-class">.8em</span>;</span><br><span class="line"><span class="selector-tag">background</span>: <span class="selector-tag">tan</span>;</span><br><span class="line"><span class="selector-tag">box-shadow</span>: 0 0 0 <span class="selector-class">.6em</span> <span class="selector-id">#655</span>;</span><br><span class="line"><span class="selector-tag">outline</span>: <span class="selector-class">.6em</span> <span class="selector-tag">solid</span> <span class="selector-id">#655</span>;</span><br></pre></td></tr></table></figure>
+<p>上述代码代码即实现边框内圆角效果，通过outline不会随容器圆角而改变但是box-shadow会改变的原理实现，用阴影填充空隙。注意：outline这一特性可能在今后的版本中改变。  </p>
+<p>在实践中box-shadow设置0.6em会略微超出outline，按理论来讲不应该，为什么？TODO</p>
 
             </div>
           
